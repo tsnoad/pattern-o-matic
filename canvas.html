@@ -229,6 +229,18 @@ $(function () {
 			this.setmolecule();
 			this.settile();
 			this.setbackground();
+
+			var fivebin = 0;
+			var patb36 = "";
+			for (var i=0; i<49; i+=5) {
+
+				var fivebin = 0;
+				for (var j in this.options.pattern.slice(i,i+5)) {
+					fivebin = fivebin +(this.options.pattern.slice(i,i+5)[j]?1:0)*Math.pow(10,4-j);
+				}
+				patb36 = patb36+parseInt(fivebin, 2).toString(36);
+			}
+			console.log(patb36);
 		},
 		setmolecule: function() {
 			var preset = this.options;
