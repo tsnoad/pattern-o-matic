@@ -7,14 +7,37 @@
 		<script src="jquery-ui.min.js" type="text/javascript"></script>
 		<script src="2dslider.js" type="text/javascript"></script>
 <!-- 		<script src="context_blender.js" type="text/javascript"></script> -->
+		<script src="jquery.ba-hashchange.js" type="text/javascript"></script>
 
 		<script src="BlobBuilder.js" type="text/javascript"></script>
 		<script src="FileSaver.js" type="text/javascript"></script>
 		<script src="canvas-toBlob.js" type="text/javascript"></script>
 <style type="text/css">
+/*
 canvas {
 	position: absolute; left: 0px; top: 0px;
 }
+*/
+html {
+/* 	width: 100%; min-height: 100%; position: relative; */
+}
+body {
+	width: 100%; min-height: 100%; position: relative; margin: 0px; padding: 0px;
+}
+#tile {
+	width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; overflow: hidden;
+}
+#tile canvas {
+	position: absolute; left: 0px; top: 0px;
+}
+.controls {
+	width: 776px;
+	height: 800px;
+	position: relative;
+	margin: 0px auto;
+	background: url("patternomatic.png") center top no-repeat;
+}
+/*
 .logo {
 	width: 304px;
 	height: 38px;
@@ -22,41 +45,82 @@ canvas {
 	margin: 0px auto;
 	background: url("patternomatic.png") 0px 0px no-repeat;
 }
-.controls {
-	width: 776px;
-	position: relative;
-	margin: 50px auto 0px auto;
-}
+*/
 .controls #hueslider {
 	position: absolute;
 	left: 11px;
-	top: 48px;
+	top: 138px;
 }
 .controls #saturationslider {
 	position: absolute;
 	left: 209px;
-	top: 14px;
+	top: 104px;
 }
 .controls #pixelsslider {
 	position: absolute;
 	left: 367px;
-	top: 48px;
+	top: 138px;
 }
 .controls #pixels {
 	position: absolute;
 	left: 474px;
-	top: 0px;
+	top: 90px;
 }
 .controls #noiseslider {
 	position: absolute;
 	left: 649px;
-	top: 69px;
+	top: 159px;
 }
 .controls #highlightslider {
 	position: absolute;
 	left: 649px;
-	top: 27px;
+	top: 117px;
 }
+.controls #download {
+	width: 56px;
+	height: 64px;
+	position: absolute;
+	left: 360px;
+	top: 280px;
+	background: url("ui-download.png") 0px 0px no-repeat;
+	cursor: pointer;
+}
+.controls #patterns {
+	width: 576px;
+	height: 28px;
+	position: absolute;
+	left: 95px;
+	top: 428px;
+	padding: 8px 5px;
+	background: url("ui-patterns-shadow.png") 0px 0px no-repeat;
+}
+.controls #patterns a.pattern {
+	display: block;
+	width: 28px;
+	height: 28px;
+	float: left;
+	margin: 0px 2px;
+}
+#p94904ac13fc7c238bf7ba4476ddaf12b { background: url("ui-patterns.png")    0px 0px no-repeat; }
+#p758e865d9f395a16f4a707d8fc57c57e { background: url("ui-patterns.png")  -28px 0px no-repeat; }
+#p0689ce0178482fdc12567c72a5156f43 { background: url("ui-patterns.png")  -56px 0px no-repeat; }
+#p465eb428877f57d6bc309ad1941f7c12 { background: url("ui-patterns.png")  -84px 0px no-repeat; }
+#p343de2d437775c90d7d78f051916d02b { background: url("ui-patterns.png") -112px 0px no-repeat; }
+#p74297df2ab02179170f88afcc3d3706d { background: url("ui-patterns.png") -140px 0px no-repeat; }
+
+#p73386f2a94c50972e09db240ab60d048 { background: url("ui-patterns.png")    0px -28px no-repeat; }
+#p135b91ba8e1f319bac80b6b76175f842 { background: url("ui-patterns.png")  -28px -28px no-repeat; }
+#p92c4f7560cf91321aaa65869fb2352d6 { background: url("ui-patterns.png")  -56px -28px no-repeat; }
+#p9ceea065d0cf966c9bac64eb5d93c29b { background: url("ui-patterns.png")  -84px -28px no-repeat; }
+#p6d85cf195e09a59aa923cbd21f70035f { background: url("ui-patterns.png") -112px -28px no-repeat; }
+#p0c8df2410690001691a8f4b4935fe47b { background: url("ui-patterns.png") -140px -28px no-repeat; }
+
+#p4331711e5009941e0e21feb83a3e1dee { background: url("ui-patterns.png")    0px -56px no-repeat; }
+#p4cd729d44ed9a520d38589b46530a2c8 { background: url("ui-patterns.png")  -28px -56px no-repeat; }
+#p3c3d088f81d1702c206706b197633380 { background: url("ui-patterns.png")  -56px -56px no-repeat; }
+#p2fbbd003001eeade9c471a5bf66b4de9 { background: url("ui-patterns.png")  -84px -56px no-repeat; }
+#p3305777e01ab0c9b72f73c224cc5ed2c { background: url("ui-patterns.png") -112px -56px no-repeat; }
+#p345215e93d575de853dc5e3042f341e1 { background: url("ui-patterns.png") -140px -56px no-repeat; }
 
 .ui-slider-handle {
     outline: none;
@@ -145,6 +209,10 @@ canvas {
 	background: url("ui-slider-handle.png") -20px 0px no-repeat;
 }
 
+.ui-pixels-6_rows { background: url("ui-pixels-frame.png") -378px 0px no-repeat; }
+.ui-pixels-5_rows { background: url("ui-pixels-frame.png") -252px 0px no-repeat; }
+.ui-pixels-4_rows { background: url("ui-pixels-frame.png") -126px 0px no-repeat; }
+.ui-pixels-3_rows { background: url("ui-pixels-frame.png") 0px 0px no-repeat; }
 
 .ui-pixels-row {
 	width: 126px;
@@ -161,6 +229,7 @@ canvas {
 	background: url("ui-pixels-pixel.png") -18px 0px no-repeat;
 }
 
+/*
 .ui-pixels-6_rows .ui-pixels-row:first-child {
 	margin-top: 9px;
 }
@@ -185,6 +254,7 @@ canvas {
 .ui-pixels-3_rows .ui-pixels-row {
 	margin-left: 36px;
 }
+*/
 
 .ui-pixels-6_rows .ui-pixels-pixel-ring_6 {
 /* 	display: none; */
@@ -229,18 +299,6 @@ $(function () {
 			this.setmolecule();
 			this.settile();
 			this.setbackground();
-
-			var fivebin = 0;
-			var patb36 = "";
-			for (var i=0; i<49; i+=5) {
-
-				var fivebin = 0;
-				for (var j in this.options.pattern.slice(i,i+5)) {
-					fivebin = fivebin +(this.options.pattern.slice(i,i+5)[j]?1:0)*Math.pow(10,4-j);
-				}
-				patb36 = patb36+parseInt(fivebin, 2).toString(36);
-			}
-			console.log(patb36);
 		},
 		setmolecule: function() {
 			var preset = this.options;
@@ -252,7 +310,7 @@ $(function () {
 				this.element.children(".molecule")[0].height = preset.patternsize;
 			
 				ctx.fillStyle = ("hsl("+preset.hue+","+preset.saturation+"%,"+preset.lightness+"%)");
-				ctx.fillRect(0, 0, 1000, 1000);
+				ctx.fillRect(0, 0, 7, 7);
 			
 				for (y=0; y<7; y++) {
 					if (y>=preset.patternsize) continue;
@@ -325,10 +383,7 @@ $(function () {
 			var alpha = preset.noise/100;
 			var alpha1 = 1 - alpha;
 			
-			for (var i = 0, il = pixels.length; i < il; i += 4) {
-			  // generate "noise" pixel
-/* 				var color = Math.ceil(Math.random() * 255*0.75 + 255*0.25); */
-			
+			for (var i = 0, il = pixels.length; i < il; i += 4) {			
 				oR = pixels[i];
 				oG = pixels[i + 1];
 				oB = pixels[i + 2];
@@ -336,12 +391,7 @@ $(function () {
 				nR = noisepixels[i];
 				nG = noisepixels[i + 1];
 				nB = noisepixels[i + 2];
-			
-/*
-				pixels[i] =     color * alpha + oR * alpha1;
-				pixels[i + 1] = color * alpha + oG * alpha1;
-				pixels[i + 2] = color * alpha + oB * alpha1;
-*/
+
 				pixels[i] =     nR * alpha + oR * alpha1;
 				pixels[i + 1] = nG * alpha + oG * alpha1;
 				pixels[i + 2] = nB * alpha + oB * alpha1;
@@ -350,21 +400,22 @@ $(function () {
 			ctx.putImageData(imageData, 0, 0);
 		},
 		downloadtile: function() {
+			var hash = encode_hash(this.options);
 			this.element.children(".tile")[0].toBlob(function(blob) {
-			    saveAs(blob, "background-o-matic.png");
+			    saveAs(blob, "patternomatic_"+hash+".png");
 			});
 		},
 		setbackground: function() {
 			if (this.element.children(".background")[0].getContext) {
 				var ctx = this.element.children(".background")[0].getContext('2d');
 			
-				this.element.children(".background")[0].width = window.innerWidth;
-				this.element.children(".background")[0].height = window.innerHeight;
+				this.element.children(".background")[0].width = $(document).width();
+				this.element.children(".background")[0].height = $(document).height();
 			
 				var pat=ctx.createPattern(this.element.children(".tile")[0],"repeat");
 			
 				ctx.fillStyle = pat;
-				ctx.fillRect(0, 0, 10000, 10000);
+				ctx.fillRect(0, 0, 4000, 3000);
 			}
 		},
 	});
@@ -399,6 +450,13 @@ $(function () {
 				.removeClass("ui-pixels-7_rows")
 				.addClass("ui-pixels-"+this.options.patternsize+"_rows");
 		},
+		pixels: function(pattern) {
+			for (var i = 0; i < 49; i++) {
+				var x = i%7;
+				var y = Math.floor(i/7);
+				this.element.find(".ui-pixels-pixel-at_"+x+"_"+y).toggleClass("ui-pixels-pixel-on", pattern[i]);
+			}
+		},
 		createpixel: function(x, y) {
 			return $('<div class="ui-pixels-pixel"></div>')
 				.addClass("ui-pixels-pixel-at_"+x+"_"+y)
@@ -417,7 +475,7 @@ $(function () {
 		}
 	});
 
-/*
+	//blue vertical stripes, alternating thicknesses
 	var preset = {
 		hue: 207,
 		saturation: 50,
@@ -435,10 +493,11 @@ $(function () {
 			false, false, false, false, false, false, false
 		],
 		file: "0d71ed6e5cfbf61dc4c73f04e8b76237_final.png"
-	}
-*/
+	};
 
-	var preset = {
+/*
+	//blue diagonal stripes
+	console.log(encode_hash({
 		hue: 219,
 		saturation: 13,
 		lightness: 22,
@@ -454,22 +513,33 @@ $(function () {
 			false, false, false, false, false, false, false,
 			false, false, false, false, false, false, false
 		],
+	}));
+	var preset = decode_hash("a2ekggx4vvp6xo074");
+*/
+
+	if (window.document.location.hash) {
+		try {
+			var preset = decode_hash(window.document.location.hash.substr(1));
+		} catch (err) {
+			//could not create page from hash, use default
+			var preset = decode_hash("9j65z2q4jerqh0ni8");
+		}
+	} else {
+		//var preset = preset;
 	}
 
-
 	$("#tile").foobar(preset);
-/*
-	window.resize(function() {
-		$("#tile").foobar(preset);
-	});
-*/
 
 	$("#hueslider").slider({orientation: "horizontal", min: 0, max: 360, value: preset.hue,
 		slide: function(event, ui) {
 			preset.hue = ui.value;
 			$("#tile").foobar(preset);
 			$("#saturationslider").css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
-		}
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		},
 	}).append('<div class="ui-slider-bg"></div>');
 
 	$("#saturationslider").squiggles({valueX: 100-preset.saturation, valueY: preset.lightness, 
@@ -477,14 +547,22 @@ $(function () {
 			preset.saturation = 100-ui.value.x;
 			preset.lightness = ui.value.y;
 			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
 		}
-	}).append('<div class="ui-slider-bg"></div>');
+	}).css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
 
 	$("#pixelsslider").slider({orientation: "horizontal", min: 3, max: 7, step: 1, value: preset.patternsize, 
 		slide: function(event, ui) {
 			preset.patternsize = ui.value;
 			$("#pixels").pixels({patternsize: preset.patternsize, pattern: preset.pattern});
 			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
 		}
 	}).append('<div class="ui-slider-bg"></div>');
 
@@ -492,26 +570,254 @@ $(function () {
 		change: function(event, ui) {
 			preset.pattern = this.options.pattern;
 			$("#tile").foobar(preset);
-		}
-	});
 
-	$("#noiseslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.noise, 
-		slide: function(event, ui) {
-			preset.noise = ui.value;
-			$("#tile").foobar(preset);
-		}
-	}).append('<div class="ui-slider-bg"></div>');
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+ 		}
+	});
 
 	$("#highlightslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.highlight, 
 		slide: function(event, ui) {
 			preset.highlight = ui.value;
 			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		}
+	}).append('<div class="ui-slider-bg"></div>');
+
+	$("#noiseslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.noise, 
+		slide: function(event, ui) {
+			preset.noise = ui.value;
+			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
 		}
 	}).append('<div class="ui-slider-bg"></div>');
 
 	$("#download").click(function(event, ui) {
 		$("#tile").foobar("downloadtile", preset);
 	});
+	$(window).resize(function() {
+		$("#tile").foobar(preset);
+	});
+
+	function encode_hash(preset) {
+		try {
+			verify_hash_preset(preset);
+		} catch (err) {
+			throw "can't encode hash, preset is invalid: "+err;
+		}
+
+		var hue_input = Math.round(preset.hue);
+		var saturation_input = Math.round(preset.saturation);
+		var lightness_input = Math.round(preset.lightness);
+		var highlight_input = Math.round(preset.highlight);
+		var noise_input = Math.round(preset.noise);
+		var patternsize_input = Math.round(preset.patternsize);
+		var pattern_input = Math.round(preset.pattern);
+
+		var huedigits = "";
+		var satbounce = false;
+		var satdigits = "";
+		var lghbounce = false;
+		var lghdigits = "";
+		var hltbounce = false;
+		var hltdigits = "";
+		var nsebounce = false;
+		var nsedigits = "";
+	
+		if (hue_input>=100) {
+			huedigits = hue_input.toString();
+		} else if (hue_input>=10) {
+			huedigits = "0"+hue_input.toString();
+		} else {
+			huedigits = "00"+hue_input.toString();
+		}
+	
+		if (saturation_input==100) {
+			satbounce = true;
+			satdigits = "00";
+		} else if (saturation_input>=10) {
+			satdigits = saturation_input.toString();
+		} else {
+			satdigits = "0"+saturation_input.toString();
+		}
+	
+		if (lightness_input==100) {
+			lghbounce = true;
+			lghdigits = "00";
+		} else if (lightness_input>=10) {
+			lghdigits = lightness_input.toString();
+		} else {
+			lghdigits = "0"+lightness_input.toString();
+		}
+	
+		if (highlight_input>=10) {
+			hltbounce = true;
+			hltdigits = parseInt(highlight_input-10).toString();
+		} else {
+			hltdigits = highlight_input.toString();
+		}
+	
+		if (noise_input>=10) {
+			nsebounce = true;
+			nsedigits = parseInt(noise_input-10).toString();
+		} else {
+			nsedigits = noise_input.toString();
+		}
+	
+		var pszadj = patternsize_input-3;
+
+		var patdec = 0;
+		for (var i=0; i<49; i++) {
+			if (pattern_input[i]) patdec += Math.pow(2,48-i);
+		}
+		var patb36 = parseInt(patdec, 10).toString(36);
+
+		var optb36 = parseInt(
+			huedigits
+			+satdigits
+			+lghdigits
+			+hltdigits
+			+nsedigits
+			+parseInt((satbounce ? 4 : 0) + (lghbounce ? 2 : 0) + (hltbounce ? 1 : 0), 10).toString()
+			+parseInt((nsebounce ? 5 : 0) + pszadj, 10).toString()
+		, 10).toString(36);
+
+		while (optb36.length<7) {
+			optb36 = "0"+optb36;
+		}
+		while (patb36.length<10) {
+			patb36 = "0"+patb36;
+		}
+
+		return optb36+patb36;
+	}
+
+	function decode_hash(hash) {
+		if (hash.length!=17) {
+			throw "can't decode hash, hash is wrong";
+		}
+
+		var optb36 = hash.substr(0,7);
+		var patb36 = hash.substr(7,10);
+
+		var optdec = parseInt(optb36, 36).toString(10);
+		while (optdec.length<11) {
+			optdec = "0"+optdec;
+		}
+
+		var huedigits = optdec.substr(0,3);
+		var satdigits = optdec.substr(3,2);
+		var lghdigits = optdec.substr(3+2,2);
+		var hltdigits = optdec.substr(3+2+2,1);
+		var nsedigits = optdec.substr(3+2+2+1,1);
+
+		var slh_flag = optdec.substr(3+2+2+1+1,1);
+		var satbounce = slh_flag==4||slh_flag==5||slh_flag==6||slh_flag==7;
+		var lghbounce = slh_flag==2||slh_flag==3||slh_flag==6||slh_flag==7;
+		var hltbounce = slh_flag==1||slh_flag==3||slh_flag==5||slh_flag==7;
+
+		var np_flag = optdec.substr(3+2+2+1+1+1,1);
+		var nsebounce = np_flag>4;
+		var pszdigits = np_flag;
+
+		var patdec = parseInt(patb36, 36).toString(10);
+		var patarr = new Array;
+		for (var i=0; i<49; i++) {
+			var bin2dec = Math.pow(2,48-i);
+			patarr[i] = (patdec >= bin2dec);
+			if (patdec >= bin2dec) patdec -= bin2dec;
+		}
+
+		var preset = {
+			hue: parseInt(huedigits, 10),
+			saturation: parseInt(satdigits, 10)+(satbounce?100:0),
+			lightness: parseInt(lghdigits, 10)+(lghbounce?100:0),
+			highlight: parseInt(hltdigits, 10)+(hltbounce?10:0),
+			noise: parseInt(nsedigits, 10)+(nsebounce?10:0),
+			patternsize: parseInt(pszdigits, 10)+(nsebounce?-5:0)+3,
+			pattern: patarr,
+		}
+
+		try {
+			verify_hash_preset(preset);
+		} catch (err) {
+			throw "can't decode hash, outcome preset is invalid"+err;
+		}
+
+		return preset;
+	}
+
+	function verify_hash_preset(preset) {
+		var hash_error = false;
+		var hash_error_message = "";
+
+		if (typeof preset.hue != "number") { hash_error_message += (hash_error?", ":"")+"hue must be numeric"; hash_error = true; }
+		if (preset.hue<0) { hash_error_message += (hash_error?", ":"")+"hue must be >= 0"; hash_error = true; }
+		if (preset.hue>360) { hash_error_message += (hash_error?", ":"")+"hue must be <= 360"; hash_error = true; }
+
+		if (typeof preset.saturation != "number") { hash_error_message += (hash_error?", ":"")+"saturation must be numeric"; hash_error = true; }
+		if (preset.saturation<0) { hash_error_message += (hash_error?", ":"")+"saturation must be >= 0"; hash_error = true; }
+		if (preset.saturation>100) { hash_error_message += (hash_error?", ":"")+"saturation must be <= 100"; hash_error = true; }
+
+		if (typeof preset.lightness != "number") { hash_error_message += (hash_error?", ":"")+"lightness must be numeric"; hash_error = true; }
+		if (preset.lightness<0) { hash_error_message += (hash_error?", ":"")+"lightness must be >= 0"; hash_error = true; }
+		if (preset.lightness>100) { hash_error_message += (hash_error?", ":"")+"lightness must be <= 100"; hash_error = true; }
+
+		if (typeof preset.highlight != "number") { hash_error_message += (hash_error?", ":"")+"highlight must be numeric"; hash_error = true; }
+		if (preset.highlight<0) { hash_error_message += (hash_error?", ":"")+"highlight must be >= 0"; hash_error = true; }
+		if (preset.highlight>12) { hash_error_message += (hash_error?", ":"")+"highlight must be <= 12"; hash_error = true; }
+
+		if (typeof preset.noise != "number") { hash_error_message += (hash_error?", ":"")+"noise must be numeric"; hash_error = true; }
+		if (preset.noise<0) { hash_error_message += (hash_error?", ":"")+"noise must be >= 0"; hash_error = true; }
+		if (preset.noise>12) { hash_error_message += (hash_error?", ":"")+"noise must be <= 12"; hash_error = true; }
+
+		if (typeof preset.patternsize != "number") { hash_error_message += (hash_error?", ":"")+"patternsize must be numeric"; hash_error = true; }
+		if (preset.patternsize % 1 !== 0) { hash_error_message += (hash_error?", ":"")+"patternsize must be integer"; hash_error = true; }
+		if (preset.patternsize<3) { hash_error_message += (hash_error?", ":"")+"patternsize must be >= 3"; hash_error = true; }
+		if (preset.patternsize>7) { hash_error_message += (hash_error?", ":"")+"patternsize must be <= 7"; hash_error = true; }
+
+		if (typeof preset.pattern != "object") { hash_error_message += (hash_error?", ":"")+"pattern must be object"; hash_error = true; }
+		if (preset.pattern.length!=49) { hash_error_message += (hash_error?", ":"")+"pattern must have 49 elements"; hash_error = true; }
+
+		if (hash_error) throw hash_error_message;
+	}
+
+	function hashChanged(event){
+	    if($("body").data("ignore_hash_change") === false) {
+			try {
+				var preset = decode_hash(window.document.location.hash.substr(1));
+			} catch (err) {
+				//could not update page from hash, use default
+				var preset = decode_hash("9j65z2q4jerqh0ni8");
+			}
+			$("#tile").foobar(preset);
+			$("#hueslider").slider("value", preset.hue);
+			$("#saturationslider")
+				.squiggles("value", {"x":100-preset.saturation, "y":preset.lightness})
+				.css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+			$("#pixelsslider").slider("value", preset.patternsize);
+			$("#pixels")
+				.pixels(preset)
+				.pixels("pixels", preset.pattern);
+			$("#highlightslider").slider("value", preset.highlight);
+			$("#noiseslider").slider("value", preset.noise);
+	    }
+	    $("body").data("ignore_hash_change", false);
+	}
+
+	$("body").data("ignore_hash_change", false);
+	$(window).bind("hashchange", hashChanged);
+
+	if (!window.document.location.hash) {
+		$("body").data("ignore_hash_change", true);
+		window.document.location.hash = encode_hash(preset);
+	}
 });
 		</script>
 
@@ -519,7 +825,8 @@ $(function () {
 	</head>
 	<body>
 		<div id="tile"></div>
-		<div class="logo"></div>
+		<div style="height: 1px;"></div>
+<!-- 		<div class="logo"></div> -->
 		<div class="controls">
 			<div id="hueslider"></div>
 			<div id="saturationslider"></div>
@@ -527,8 +834,29 @@ $(function () {
 			<div id="pixels"></div>
 			<div id="noiseslider"></div>
 			<div id="highlightslider"></div>
-		</div>
+			<div id="download"></div>
+			<div id="patterns">
+				<a href="#0002ng54vl99lse80" class="pattern" id="p94904ac13fc7c238bf7ba4476ddaf12b"></a>
+				<a href="#c4o5spj2lvpj8dbls" class="pattern" id="p758e865d9f395a16f4a707d8fc57c57e"></a>
+				<a href="#4pbm6214vzahegr9c" class="pattern" id="p0689ce0178482fdc12567c72a5156f43"></a>
+				<a href="#9sttmf94vzadimfwg" class="pattern" id="p465eb428877f57d6bc309ad1941f7c12"></a>
+				<a href="#4g6bza94vvp6xo074" class="pattern" id="p343de2d437775c90d7d78f051916d02b"></a>
+				<a href="#a2op30h1dzo3egw00" class="pattern" id="p74297df2ab02179170f88afcc3d3706d"></a>
 
-		<span id="download" style="position: relative;">download</span>
+				<a href="#9jfz54p4jerqh0ni8" class="pattern" id="p73386f2a94c50972e09db240ab60d048"></a>
+				<a href="#36p2tf04vs5vhzb40" class="pattern" id="p135b91ba8e1f319bac80b6b76175f842"></a>
+				<a href="#00033q84vdyuht3i8" class="pattern" id="p92c4f7560cf91321aaa65869fb2352d6"></a>
+				<a href="#c4z81qp4vzadimfwg" class="pattern" id="p9ceea065d0cf966c9bac64eb5d93c29b"></a>
+				<a href="#dioqmju2408l5p5a8" class="pattern" id="p6d85cf195e09a59aa923cbd21f70035f"></a>
+				<a href="#c4nsiru2lvpj8dbls" class="pattern" id="p0c8df2410690001691a8f4b4935fe47b"></a>
+
+				<a href="#000h3fk230xf2nz7k" class="pattern" id="p4331711e5009941e0e21feb83a3e1dee"></a>
+				<a href="#0002enh4vvp6xo074" class="pattern" id="p4cd729d44ed9a520d38589b46530a2c8"></a>
+				<a href="#a2op33923pqa82dc0" class="pattern" id="p3c3d088f81d1702c206706b197633380"></a>
+				<a href="#9j65z0027697vyk9l" class="pattern" id="p2fbbd003001eeade9c471a5bf66b4de9"></a>
+				<a href="#27um98y4jerqh0ni8" class="pattern" id="p3305777e01ab0c9b72f73c224cc5ed2c"></a>
+				<a href="#9j65yx4230xf2nz7k" class="pattern" id="p345215e93d575de853dc5e3042f341e1"></a>
+			</div>
+		</div>
 	</body>
 </html>
