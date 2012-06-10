@@ -196,6 +196,10 @@ $(function () {
 		}
 	});
 
+	//log errors to raven
+	Raven.config("https://1648a82633344b35b25b63cd70a889c4:2a3a86b59df8442fb1f23e06a0d362a3@app.getsentry.com/1083");
+	window.onerror = Raven.process;
+
 	//blue vertical stripes, alternating thicknesses
 	var preset = {
 		hue: 207,
@@ -255,7 +259,7 @@ $(function () {
 		slide: function(event, ui) {
 			preset.hue = ui.value;
 			$("#tile").foobar(preset);
-			$("#saturationslider").css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+			$("#saturationslider").css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
  		},
 		stop: function(event, ui) {
 			$("body").data("ignore_hash_change", true);
@@ -273,7 +277,7 @@ $(function () {
 			$("body").data("ignore_hash_change", true);
 			window.document.location.hash = encode_hash(preset);
 		}
-	}).css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
+	}).css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
 
 	$("#pixelsslider").slider({orientation: "horizontal", min: 3, max: 7, step: 1, value: preset.patternsize, 
 		slide: function(event, ui) {
@@ -521,7 +525,7 @@ $(function () {
 			$("#hueslider").slider("value", preset.hue);
 			$("#saturationslider")
 				.squiggles("value", {"x":100-preset.saturation, "y":preset.lightness})
-				.css("background", "url('g6728.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+				.css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
 			$("#pixelsslider").slider("value", preset.patternsize);
 			$("#pixels")
 				.pixels(preset)
