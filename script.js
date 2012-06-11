@@ -441,7 +441,9 @@ $(function () {
 		slide: function(event, ui) {
 			preset.hue = ui.value;
 			$("#tile").foobar(preset);
-			$("#saturationslider").css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+			$("#saturationslider")
+				.css({background:"-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))"})
+				.css({background:"-moz-linear-gradient(top, hsl("+preset.hue+", 100%, 50%), hsl("+preset.hue+", 0%, 50%))"});
  		},
 		stop: function(event, ui) {
 			$("body").data("ignore_hash_change", true);
@@ -459,7 +461,9 @@ $(function () {
 			$("body").data("ignore_hash_change", true);
 			window.document.location.hash = encode_hash(preset);
 		}
-	}).css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
+	}).css({background:"-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))"})
+		.css({background:"-moz-linear-gradient(top, hsl("+preset.hue+", 100%, 50%), hsl("+preset.hue+", 0%, 50%))"})
+		.append('<div class="ui-slider-bg"></div>');
 
 	$("#pixelsslider").slider({orientation: "horizontal", min: 3, max: 7, step: 1, value: preset.patternsize, 
 		slide: function(event, ui) {
@@ -529,7 +533,8 @@ $(function () {
 			$("#hueslider").slider("value", preset.hue);
 			$("#saturationslider")
 				.squiggles("value", {"x":100-preset.saturation, "y":preset.lightness})
-				.css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+				.css({background:"-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))"})
+				.css({background:"-moz-linear-gradient(top, hsl("+preset.hue+", 100%, 50%), hsl("+preset.hue+", 0%, 50%))"});
 			$("#pixelsslider").slider("value", preset.patternsize);
 			$("#pixels")
 				.pixels(preset)

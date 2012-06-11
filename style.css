@@ -157,10 +157,11 @@ html, body {
 	height: 100px;
 	margin: 0px;
 	border-radius: 2px;
-	background: -webkit-gradient(linear, 10% top, right top, 
+	background: -webkit-gradient(linear, left top, left top, 
 		from(hsl(208, 100%, 50%)), 
 		to(hsl(208, 0%, 50%))
 	);
+	background: -moz-linear-gradient(top, hsl(208, 100%, 50%), hsl(208, 0%, 50%));
 }
 #saturationslider .ui-slider-bg {
 	position: absolute;
