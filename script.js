@@ -196,140 +196,6 @@ $(function () {
 		}
 	});
 
-	//log errors to raven
-	Raven.config("https://1648a82633344b35b25b63cd70a889c4:2a3a86b59df8442fb1f23e06a0d362a3@app.getsentry.com/1083");
-	window.onerror = Raven.process;
-
-	//blue vertical stripes, alternating thicknesses
-	var preset = {
-		hue: 207,
-		saturation: 50,
-		lightness: 25,
-		highlight: 4,
-		noise: 8,
-		patternsize: 5,
-		pattern: [
-			true, true, false, true, false, false, false,
-			true, true, false, true, false, false, false,
-			true, true, false, true, false, false, false,
-			true, true, false, true, false, false, false,
-			true, true, false, true, false, false, false,
-			false, false, false, false, false, false, false,
-			false, false, false, false, false, false, false
-		],
-		file: "0d71ed6e5cfbf61dc4c73f04e8b76237_final.png"
-	};
-
-/*
-	//blue diagonal stripes
-	console.log(encode_hash({
-		hue: 219,
-		saturation: 13,
-		lightness: 22,
-		highlight: 4,
-		noise: 8,
-		patternsize: 4,
-		pattern: [
-			true, true, true, false, false, false, false,
-			true, true, false, true, false, false, false,
-			true, false, true, true, false, false, false,
-			false, true, true, true, false, false, false,
-			false, false, false, false, false, false, false,
-			false, false, false, false, false, false, false,
-			false, false, false, false, false, false, false
-		],
-	}));
-	var preset = decode_hash("a2ekggx4vvp6xo074");
-*/
-
-	if (window.document.location.hash) {
-		try {
-			var preset = decode_hash(window.document.location.hash.substr(1));
-		} catch (err) {
-			//could not create page from hash, use default
-			var preset = decode_hash("9j65z2q4jerqh0ni8");
-		}
-	} else {
-		//var preset = preset;
-	}
-
-	$("#tile").foobar(preset);
-
-	$("#hueslider").slider({orientation: "horizontal", min: 0, max: 360, value: preset.hue,
-		slide: function(event, ui) {
-			preset.hue = ui.value;
-			$("#tile").foobar(preset);
-			$("#saturationslider").css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
- 		},
-		stop: function(event, ui) {
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
-		},
-	}).append('<div class="ui-slider-bg"></div>');
-
-	$("#saturationslider").squiggles({valueX: 100-preset.saturation, valueY: preset.lightness, 
-		slide: function(event, ui) {
-			preset.saturation = 100-ui.value.x;
-			preset.lightness = ui.value.y;
-			$("#tile").foobar(preset);
- 		},
-		stop: function(event, ui) {
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
-		}
-	}).css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
-
-	$("#pixelsslider").slider({orientation: "horizontal", min: 3, max: 7, step: 1, value: preset.patternsize, 
-		slide: function(event, ui) {
-			preset.patternsize = ui.value;
-			$("#pixels").pixels({patternsize: preset.patternsize, pattern: preset.pattern});
-			$("#tile").foobar(preset);
- 		},
-		stop: function(event, ui) {
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
-		}
-	}).append('<div class="ui-slider-bg"></div>');
-
-	$("#pixels").pixels({patternsize: preset.patternsize, pattern: preset.pattern,
-		change: function(event, ui) {
-			preset.pattern = this.options.pattern;
-			$("#tile").foobar(preset);
-
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
- 		}
-	});
-
-	$("#highlightslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.highlight, 
-		slide: function(event, ui) {
-			preset.highlight = ui.value;
-			$("#tile").foobar(preset);
- 		},
-		stop: function(event, ui) {
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
-		}
-	}).append('<div class="ui-slider-bg"></div>');
-
-	$("#noiseslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.noise, 
-		slide: function(event, ui) {
-			preset.noise = ui.value;
-			$("#tile").foobar(preset);
- 		},
-		stop: function(event, ui) {
-			$("body").data("ignore_hash_change", true);
-			window.document.location.hash = encode_hash(preset);
-		}
-	}).append('<div class="ui-slider-bg"></div>');
-
-	$("#download").click(function(event, ui) {
-		$("#tile").foobar("downloadtile", preset);
-	});
-	$(window).resize(function() {
-		$("#tile").foobar(preset);
-	});
-
 	function encode_hash(preset) {
 		try {
 			verify_hash_preset(preset);
@@ -342,8 +208,8 @@ $(function () {
 		var lightness_input = Math.round(preset.lightness);
 		var highlight_input = Math.round(preset.highlight);
 		var noise_input = Math.round(preset.noise);
-		var patternsize_input = Math.round(preset.patternsize);
-		var pattern_input = Math.round(preset.pattern);
+		var patternsize_input = preset.patternsize;
+		var pattern_input = preset.pattern;
 
 		var huedigits = "";
 		var satbounce = false;
@@ -513,19 +379,157 @@ $(function () {
 		if (hash_error) throw hash_error_message;
 	}
 
+	//log errors to raven
+	Raven.config("https://1648a82633344b35b25b63cd70a889c4:2a3a86b59df8442fb1f23e06a0d362a3@app.getsentry.com/1083");
+	window.onerror = Raven.process;
+
+	if (window.document.location.hash) {
+		try {
+			var preset = decode_hash(window.document.location.hash.substr(1));
+		} catch (err) {
+			_gaq.push(['_trackEvent', "Bad Hash", "Page Load", window.document.location.hash.substr(1)]);
+			//could not create page from hash, use default
+			var preset = decode_hash("9j65z2q4jerqh0ni8");
+			alert("Sorry, something's wrong with that pattern");
+		}
+	} else {
+		//blue vertical stripes, alternating thicknesses
+		var preset = {
+			hue: 207,
+			saturation: 50,
+			lightness: 25,
+			highlight: 4,
+			noise: 8,
+			patternsize: 5,
+			pattern: [
+				true, true, false, true, false, false, false,
+				true, true, false, true, false, false, false,
+				true, true, false, true, false, false, false,
+				true, true, false, true, false, false, false,
+				true, true, false, true, false, false, false,
+				false, false, false, false, false, false, false,
+				false, false, false, false, false, false, false
+			],
+			file: "0d71ed6e5cfbf61dc4c73f04e8b76237_final.png"
+		};
+	
+/*
+		//blue diagonal stripes
+		var preset = {
+			hue: 219,
+			saturation: 13,
+			lightness: 22,
+			highlight: 4,
+			noise: 8,
+			patternsize: 4,
+			pattern: [
+				true, true, true, false, false, false, false,
+				true, true, false, true, false, false, false,
+				true, false, true, true, false, false, false,
+				false, true, true, true, false, false, false,
+				false, false, false, false, false, false, false,
+				false, false, false, false, false, false, false,
+				false, false, false, false, false, false, false
+			],
+		};
+*/
+	}
+
+	$("#tile").foobar(preset);
+
+	$("#hueslider").slider({orientation: "horizontal", min: 0, max: 360, value: preset.hue,
+		slide: function(event, ui) {
+			preset.hue = ui.value;
+			$("#tile").foobar(preset);
+			$("#saturationslider").css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		},
+	}).append('<div class="ui-slider-bg"></div>');
+
+	$("#saturationslider").squiggles({valueX: 100-preset.saturation, valueY: preset.lightness, 
+		slide: function(event, ui) {
+			preset.saturation = 100-ui.value.x;
+			preset.lightness = ui.value.y;
+			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		}
+	}).css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))").append('<div class="ui-slider-bg"></div>');
+
+	$("#pixelsslider").slider({orientation: "horizontal", min: 3, max: 7, step: 1, value: preset.patternsize, 
+		slide: function(event, ui) {
+			preset.patternsize = ui.value;
+			$("#pixels").pixels({patternsize: preset.patternsize, pattern: preset.pattern});
+			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		}
+	}).append('<div class="ui-slider-bg"></div>');
+
+	$("#pixels").pixels({patternsize: preset.patternsize, pattern: preset.pattern,
+		change: function(event, ui) {
+			preset.pattern = this.options.pattern;
+			$("#tile").foobar(preset);
+
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+ 		}
+	});
+
+	$("#highlightslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.highlight, 
+		slide: function(event, ui) {
+			preset.highlight = ui.value;
+			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		}
+	}).append('<div class="ui-slider-bg"></div>');
+
+	$("#noiseslider").slider({orientation: "horizontal", min: 0, max: 12, step: 0.01, value: preset.noise, 
+		slide: function(event, ui) {
+			preset.noise = ui.value;
+			$("#tile").foobar(preset);
+ 		},
+		stop: function(event, ui) {
+			$("body").data("ignore_hash_change", true);
+			window.document.location.hash = encode_hash(preset);
+		}
+	}).append('<div class="ui-slider-bg"></div>');
+
+	$("#download").click(function(event, ui) {
+		$("#tile").foobar("downloadtile", preset);
+	});
+	$(window).resize(function() {
+		$("#tile").foobar(preset);
+	});
+
 	function hashChanged(event){
+		_gaq.push(['_trackPageview', location.pathname+location.search+location.hash]);
 	    if($("body").data("ignore_hash_change") === false) {
 			try {
-				var preset = decode_hash(window.document.location.hash.substr(1));
+				//set global
+				preset = decode_hash(window.document.location.hash.substr(1));
 			} catch (err) {
+				_gaq.push(['_trackEvent', "Bad Hash", "Hash Change", window.document.location.hash.substr(1)]);
 				//could not update page from hash, use default
-				var preset = decode_hash("9j65z2q4jerqh0ni8");
+				//set global
+				preset = decode_hash("9j65z2q4jerqh0ni8");
+				alert("Sorry, something's wrong with that pattern");
 			}
 			$("#tile").foobar(preset);
 			$("#hueslider").slider("value", preset.hue);
 			$("#saturationslider")
 				.squiggles("value", {"x":100-preset.saturation, "y":preset.lightness})
-				.css("background", "url('ui-2dslider-bg.png') left -28px no-repeat, -webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
+				.css("background", "-webkit-gradient(linear, left top, right top, from(hsl("+preset.hue+", 100%, 50%)), to(hsl("+preset.hue+", 0%, 50%)))");
 			$("#pixelsslider").slider("value", preset.patternsize);
 			$("#pixels")
 				.pixels(preset)
