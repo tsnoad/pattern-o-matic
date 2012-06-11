@@ -1,72 +1,58 @@
-/*
-canvas {
-	position: absolute; left: 0px; top: 0px;
+html/* , body */ {
+	width: 100%; height: 100%; position: relative; margin: 0px; padding: 0px;
 }
-*/
-html {
-/* 	width: 100%; min-height: 100%; position: relative; */
-}
-body {
+html, body {
 	width: 100%; min-height: 100%; position: relative; margin: 0px; padding: 0px;
 }
 #tile {
-	width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; overflow: hidden;
+	width: 100%; min-height: 100%; position: absolute; left: 0px; top: 0px; overflow: hidden;
 }
 #tile canvas {
 	position: absolute; left: 0px; top: 0px;
 }
 .controls {
 	width: 776px;
-	height: 800px;
+	height: 539px;
 	position: relative;
 	margin: 0px auto;
-	background: url("patternomatic.png") center top no-repeat;
+	background: url("ui-labels.png") center 60px no-repeat;
 }
-/*
-.logo {
-	width: 304px;
-	height: 38px;
-	position: relative;
-	margin: 0px auto;
-	background: url("patternomatic.png") 0px 0px no-repeat;
-}
-*/
 .controls #hueslider {
 	position: absolute;
 	left: 11px;
-	top: 138px;
+	top: 196px;
 }
 .controls #saturationslider {
 	position: absolute;
 	left: 209px;
-	top: 104px;
+	top: 171px;
 }
 .controls #pixelsslider {
 	position: absolute;
 	left: 367px;
-	top: 138px;
+	top: 196px;
 }
 .controls #pixels {
 	position: absolute;
-	left: 474px;
-	top: 90px;
+	left: 473px;
+	top: 156px;
 }
 .controls #noiseslider {
 	position: absolute;
 	left: 649px;
-	top: 159px;
+	top: 217px;
 }
 .controls #highlightslider {
 	position: absolute;
 	left: 649px;
-	top: 117px;
+	top: 175px;
 }
 .controls #download {
 	width: 56px;
 	height: 64px;
 	position: absolute;
 	left: 360px;
-	top: 280px;
+	top: 327px;
 	background: url("ui-download.png") 0px 0px no-repeat;
 	cursor: pointer;
 }
@@ -75,7 +61,7 @@ body {
 	height: 28px;
 	position: absolute;
 	left: 95px;
-	top: 428px;
+	top: 455px;
 	padding: 8px 5px;
 	background: url("ui-patterns-shadow.png") 0px 0px no-repeat;
 }
@@ -171,10 +157,11 @@ body {
 	height: 100px;
 	margin: 0px;
 	border-radius: 2px;
-	background: -webkit-gradient(linear, 10% top, right top, 
+	background: -webkit-gradient(linear, left top, left top, 
 		from(hsl(208, 100%, 50%)), 
 		to(hsl(208, 0%, 50%))
 	);
+	background: -moz-linear-gradient(top, hsl(208, 100%, 50%), hsl(208, 0%, 50%));
 }
 #saturationslider .ui-slider-bg {
 	position: absolute;
@@ -214,46 +201,24 @@ body {
 	background: url("ui-pixels-pixel.png") -18px 0px no-repeat;
 }
 
-/*
-.ui-pixels-6_rows .ui-pixels-row:first-child {
-	margin-top: 9px;
-}
-.ui-pixels-6_rows .ui-pixels-row {
-	margin-left: 9px;
-}
-.ui-pixels-5_rows .ui-pixels-row:first-child {
-	margin-top: 18px;
-}
-.ui-pixels-5_rows .ui-pixels-row {
-	margin-left: 18px;
-}
-.ui-pixels-4_rows .ui-pixels-row:first-child {
-	margin-top: 27px;
-}
-.ui-pixels-4_rows .ui-pixels-row {
-	margin-left: 27px;
-}
-.ui-pixels-3_rows .ui-pixels-row:first-child {
-	margin-top: 36px;
-}
-.ui-pixels-3_rows .ui-pixels-row {
-	margin-left: 36px;
-}
-*/
-
 .ui-pixels-6_rows .ui-pixels-pixel-ring_6 {
-/* 	display: none; */
 	visibility: hidden;
 }
 .ui-pixels-5_rows .ui-pixels-pixel-ring_6, .ui-pixels-5_rows .ui-pixels-pixel-ring_5 {
-/* 	display: none; */
 	visibility: hidden;
 }
 .ui-pixels-4_rows .ui-pixels-pixel-ring_6, .ui-pixels-4_rows .ui-pixels-pixel-ring_5, .ui-pixels-4_rows .ui-pixels-pixel-ring_4 {
-/* 	display: none; */
 	visibility: hidden;
 }
 .ui-pixels-3_rows .ui-pixels-pixel-ring_6, .ui-pixels-3_rows .ui-pixels-pixel-ring_5, .ui-pixels-3_rows .ui-pixels-pixel-ring_4, .ui-pixels-3_rows .ui-pixels-pixel-ring_3 {
-/* 	display: none; */
 	visibility: hidden;
+}
+
+.label-back {
+	width: 168px;
+	height: 50px;
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	background: url("ui-label-back.png") 0px 0px no-repeat;
 }
