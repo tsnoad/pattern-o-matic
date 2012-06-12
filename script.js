@@ -122,6 +122,7 @@ $(function () {
 		},
 		downloadtile: function() {
 			var hash = encode_hash(this.options);
+			_gaq.push(['_trackEvent', "Download", "Download", hash]);
 			this.element.children(".tile")[0].toBlob(function(blob) {
 			    saveAs(blob, "patternomatic_"+hash+".png");
 			});
