@@ -15,6 +15,7 @@ html, body {
 	height: 539px;
 	position: relative;
 	margin: 0px auto;
+	padding-bottom: 24px;
 	background: url("ui-labels.png") center 60px no-repeat;
 }
 .controls #hueslider {
@@ -221,4 +222,13 @@ html, body {
 	left: 12px;
 	top: 12px;
 	background: url("ui-label-back.png") 0px 0px no-repeat;
+}
+
+.footer {
+	width: 240px;
+	height: 16px;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	background: url("ui-footer-bg.png") 0px 0px no-repeat;
 }
